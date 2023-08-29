@@ -25,12 +25,18 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.slim.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
+
               "budgets": [
                 {
                   "type": "initial",
@@ -41,6 +47,12 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
                   "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "Angular/control-clientes/src/environments/environment.ts",
+                  "with": "Angular/control-clientes/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -94,5 +106,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "96f8a701-7070-4956-bad3-fb88fc18ebf4"
   }
 }
