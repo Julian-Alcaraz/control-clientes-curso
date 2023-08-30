@@ -7,16 +7,24 @@ import { ClienteService } from 'src/app/servicios/cliente.service';
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.css']
 })
-export class ClientesComponent  {}
 
-// export class ClientesComponent implements OnInit {
-//   clientes:Cliente[];
-//   constructor(private clienteServicio: ClienteService){
-//   }
-//   ngOnInit(){
-//     this.clienteServicio.getClientes().subscribe(
-//       clientes=>{
-//         this.clientes = clientes}
-//     )
-//   }
-// }
+export class ClientesComponent implements OnInit {
+  clientes:Cliente[];
+  constructor(private clienteServicio: ClienteService){
+  }
+  ngOnInit(){
+    this.clienteServicio.getClientes().subscribe(
+      clientes=>{
+        this.clientes = clientes}
+    )
+  }
+  getSaldoTotal(){
+    let saldoTotal:number=0;
+    if (this.clientes){
+      this.clientes.forEach( cliente=>{
+        saldoTotal += Number(cliente.saldo!);
+      })
+    }
+    return saldoTotal;
+  }
+}

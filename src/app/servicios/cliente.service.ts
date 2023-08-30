@@ -11,8 +11,9 @@ export class ClienteService{
     clientes:Observable<Cliente[]>;
     cliente:Observable<Cliente>;
 
+    // private db: AngularFirestore
     constructor(private db: AngularFirestore){
-        this.clientesColeccion=db.collection('cliente',ref=>ref.orderBy('nombre','asc'));
+        this.clientesColeccion = db.collection('clientes',ref=>ref.orderBy('nombre','asc'));
     }
     getClientes():Observable<Cliente[]>{
         this.clientes=this.clientesColeccion.snapshotChanges().pipe(
@@ -26,5 +27,9 @@ export class ClienteService{
         );
         return this.clientes;
     }
+    getSaldoTotal(){
+        
+    }
+   
 
 }
