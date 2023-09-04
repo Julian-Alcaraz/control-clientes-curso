@@ -2,13 +2,8 @@
 <section id="actions" class="py-4 mb4 bg-light">
   <div class="container">
     <div class="row">
-      <div class="col-md3">
-        <a
-          href=""
-          class="btn btn-primary btn-block"
-          data-bs-toggle="modal"
-          data-bs-target="#agregarClienteModal"
-        >
+      <div class="col-md-3">
+        <a href="" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#agregarClienteModal">
           <i class="fas fa-plus"></i> Agregar Cliente
         </a>
       </div>
@@ -38,10 +33,7 @@
                 <td>{{ cliente.nombre }} {{ cliente.apellido }}</td>
                 <td>{{ cliente.saldo | currency : "AR" : "$" }}</td>
                 <td>
-                  <a
-                    routerLink="/cliente/editar/{{ cliente.id }}"
-                    class="btn btn-secondary"
-                  >
+                  <a routerLink="/cliente/editar/{{ cliente.id }}" class="btn btn-secondary">
                     <i class="fa-solid fa-angle-double-right"></i>Editar
                   </a>
                 </td>
@@ -61,53 +53,141 @@
           </div>
         </div>
         <div class="card text-center bg-success text-white mb-3">
-            <div class="card-body">
-              <h3>Total Cliente</h3>
-              <h4 class="display-4">
-                <i class="fas fa-user"></i>
-                {{ clientes?.length}}
-              </h4>
-            </div>
+          <div class="card-body">
+            <h3>Total Cliente</h3>
+            <h4 class="display-4">
+              <i class="fas fa-user"></i>
+              {{ clientes?.length }}
+            </h4>
           </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 <!-- Agregarr cliente modal -->
 <div class="modal fade" id="agregarClienteModal">
-    <div class="modal-dialog modl-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-info text-white">
-                <h5 class="modal-title">Agregar Cliente</h5>
-                <button class="btn-close" data-bs-dismiss="modal">
-                    <!-- <span>&times;</span> -->
-                </button>
-            </div>
-            <form action="">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" name="nombre" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="apellido">apellido</label>
-                        <input type="text" name="apellido" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="Email" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="saldo">Saldo</label>
-                        <input type="number" name="saldo" class="form-control">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
-                        Guardar
-                    </button>
-                </div>
-            </form>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title">Agregar Cliente</h5>
+        <button class="btn-close" data-bs-dismiss="modal" #botonCerrar>
+          <!-- <span>&times;</span> -->
+        </button>
+      </div>
+      <!-- <flash-messages></flash-messages> -->
+      <form (ngSubmit)="save()" [formGroup]="form">
+        <div class="modal-body">
+          <div class="form-group">
+            <!-- <label for="nombre">Nombre</label> -->
+            <input placeholder="nombre" type="text" id="nombre" name="nombre" class="form-control mb-2"
+              formControlName="nombre" minlength="2" [ngClass]="{
+                'is-invalid': nombreInvalid,
+                'is-valid':form.controls['nombre'].valid && form.controls['nombre'].touched
+              }" />
+          </div>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          
+                      validation: 'required',
+                      message: 'El nombre es requerido',
+                      control: form.controls['nombre']
+          
+                    }"></ng-container>
+
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          
+                      validation: 'minlength',
+                      message: 'El nombre tiene que ser mas largo',
+                      control: form.controls['nombre']
+          
+                    }"></ng-container>
+
+          <div class="form-group">
+            <!-- <label for="apellido">apellido</label> -->
+            <input placeholder="apellido" type="text" id="apellido" name="apellido" class="form-control mb-2"
+              formControlName="apellido" minlength="2" [ngClass]="{
+                'is-invalid': apellidoInvalid,
+                'is-valid':
+                  form.controls['apellido'].valid &&
+                  form.controls['apellido'].touched
+              }" />
+          </div>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          
+            validation: 'required',
+            message: 'El apellido es requerido',
+            control: form.controls['apellido']
+
+          }"></ng-container>
+
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+
+            validation: 'minlength',
+            message: 'El apellido tiene que ser mas largo',
+            control: form.controls['apellido']
+
+          }"></ng-container>
+        
+
+          <div class="form-group">
+            <!-- <label for="mail">mail</label> -->
+            <input placeholder="mail" type="email" id="mail" name="mail" class="form-control mb-2"
+              formControlName="mail" required [ngClass]="{
+                'is-invlaid': mailInvalid,
+                'is-valid':
+                  form.controls['mail'].valid && form.controls['mail'].touched
+              }" />
+          </div>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          
+            validation: 'required',
+            message: 'El email es requerido',
+            control: form.controls['mail']
+
+          }"></ng-container>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+
+            validation: 'pattern',
+            message: 'El email no cumple el formato',
+            control: form.controls['mail']
+
+          }"></ng-container>
+
+          <div class="form-group">
+            <!-- <label for="saldo">Saldo</label> -->
+            <input type="number" placeholder="saldo" name="saldo" id="saldo" class="form-control mb-2"
+              formControlName="saldo" required [ngClass]="{
+                'is-invlaid': saldoInvalid,
+                'is-valid':
+                  form.controls['saldo'].valid && form.controls['saldo'].touched
+              }" />
+          </div>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+
+            validation: 'required',
+            message: 'Complete el campo',
+            control: form.controls['saldo']
+
+          }"></ng-container>
+          
+
         </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Guardar</button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <div class="fv-plugins-message-container">
+      <div class="fv-help-block">
+        <span class="text-danger" role="alert">
+          {{ message }}
+        </span>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

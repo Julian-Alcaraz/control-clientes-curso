@@ -27,8 +27,9 @@ export class ClienteService{
         );
         return this.clientes;
     }
-    getSaldoTotal(){
-        
+    
+    cargarCliente(cliente:Cliente){
+        this.clientesColeccion.add(cliente);
     }
    
 

@@ -4,10 +4,9 @@ import { environment } from '../evironments/enviroments';
 import { AngularFireModule } from '@angular/fire/compat';
 import { provideFirestore, getFirestore} from '@angular/fire/firestore/';
 import { provideAuth,getAuth } from '@angular/fire/auth';
-import { FlashMessagesModule } from 'node_modules/flash-messages-angular'; 
-import { FormsModule } from '@angular/forms';
-
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule} from '@angular/material/input'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,11 +40,16 @@ import { ClienteService } from './servicios/cliente.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
+    // ChatInnerModule,
+    MatFormFieldModule,
+    MatInputModule,
     AngularFireModule.initializeApp(environment.firestore),
     // provideFirebaseApp(()=>initializeApp(environment.firestore)), esta es la forma nueva, cambia la forma de traerlo tmb
     provideFirestore(()=>getFirestore()),
     provideAuth(()=>getAuth()),
     // FlashMessagesModule.forRoot(), esto me explota la app nose porq
+    // FlashMessagesModule
   ],
   providers: [ClienteService],
   bootstrap: [AppComponent]
